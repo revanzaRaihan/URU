@@ -1,3 +1,4 @@
+import http from 'http';
 import 'dotenv/config';
 import {
   Client,
@@ -43,6 +44,14 @@ client.on(Events.InteractionCreate, async (interaction) => {
       ephemeral: true,
     });
   }
+});
+
+const port = process.env.PORT || 8000;
+http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Bot is alive!');
+}).listen(port, () => {
+  console.log(`Health check server listening on port ${port}`);
 });
 
 client.login(process.env.DISCORD_TOKEN);
